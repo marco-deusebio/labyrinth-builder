@@ -408,7 +408,9 @@ void drawInterfacePanel(
     float panelTop,
     float panelHeight,
     const SfmlRenderSettings& settings,
-    const sf::Font* font
+    const sf::Font* font,
+    int labyrinthLevel,
+    const Maze& maze
 )
 {
     sf::RectangleShape panel({
@@ -522,6 +524,9 @@ void drawInterfacePanel(
     window.draw(title);
     
     std::vector<std::string> statusLines{
+        "Labyrinth: " + std::to_string(labyrinthLevel),
+        "Size: " + std::to_string(maze.getWidth()) + " x " +
+            std::to_string(maze.getHeight()),
         "Tile: " + std::to_string(static_cast<int>(settings.tileSize)) +
             " px",
         "Spacing: " +
@@ -564,6 +569,12 @@ SfmlRenderer::SfmlRenderer(SfmlRenderSettings initialSettings)
 bool SfmlRenderer::isOpen() const
 {
     return window.isOpen();
+}
+
+void SfmlRenderer::setLabyrinthLevel(int nextLevel)
+{
+    labyrinthLevel = std::max(1, nextLevel);
+    updateWindowTitle();
 }
 
 void SfmlRenderer::loadInterfaceFont()
@@ -676,10 +687,6 @@ void SfmlRenderer::processKeyPress(
     } else if (keyPressed.code == sf::Keyboard::Key::Right) {
         tryMovePlayer(maze, player, 0, 1);
     }
-    
-    if (maze.isExit(player.getRow(), player.getColumn())) {
-        window.setTitle("Labyrinth Forge - Exit Reached");
-    }
 }
 
 void SfmlRenderer::processMouseClick(
@@ -783,7 +790,9 @@ void SfmlRenderer::updateWindowSize(const Maze& maze)
 void SfmlRenderer::updateWindowTitle()
 {
     window.setTitle(
-        "Labyrinth Forge - spacing " +
+        "Labyrinth Forge - Labyrinth " +
+        std::to_string(labyrinthLevel) +
+        ", spacing " +
         std::to_string(static_cast<int>(settings.tileSpacing)) +
         " px, tile " +
         std::to_string(static_cast<int>(settings.tileSize)) +
@@ -888,9 +897,10 @@ void SfmlRenderer::render(
         mazeTop,
         mazePixelHeight,
         settings,
-        interfaceFontLoaded ? &interfaceFont : nullptr
+        interfaceFontLoaded ? &interfaceFont : nullptr,
+        labyrinthLevel,
+        maze
     );
     
     window.display();
 }
-

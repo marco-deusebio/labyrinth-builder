@@ -37,12 +37,14 @@ public:
         const Maze& maze,
         const Player& player
     ) override;
+    void setLabyrinthLevel(int nextLevel);
     
 private:
     sf::RenderWindow window;
     SfmlRenderSettings settings;
     sf::Font interfaceFont;
     bool interfaceFontLoaded = false;
+    int labyrinthLevel = 1;
     
     void loadInterfaceFont();
     void processKeyPress(

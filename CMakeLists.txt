@@ -15,31 +15,52 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(SFML)
 
-add_executable(
-    LabyrinthForge
-    "Labyrinth Forge/main.cpp"
+add_library(
+    LabyrinthForgeCore
     "Labyrinth Forge/Game.cpp"
     "Labyrinth Forge/Maze.cpp"
     "Labyrinth Forge/Player.cpp"
     "Labyrinth Forge/ConsoleRenderer.cpp"
+)
+
+target_compile_features(
+    LabyrinthForgeCore
+    PUBLIC cxx_std_20
+)
+
+target_include_directories(
+    LabyrinthForgeCore
+    PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Labyrinth Forge"
+)
+
+add_library(
+    LabyrinthForgeSfmlRenderer
     "Labyrinth Forge/SfmlRenderer.cpp"
 )
 
 target_compile_features(
+    LabyrinthForgeSfmlRenderer
+    PUBLIC cxx_std_20
+)
+
+target_link_libraries(
+    LabyrinthForgeSfmlRenderer
+    PUBLIC LabyrinthForgeCore SFML::Graphics
+)
+
+add_executable(
     LabyrinthForge
-    PRIVATE cxx_std_20
+    "Labyrinth Forge/main.cpp"
 )
 
 target_link_libraries(
     LabyrinthForge
-    PRIVATE SFML::Graphics
+    PRIVATE LabyrinthForgeCore
 )
 
 add_executable(
     SfmlWindowTest
     "SfmlWindowTest/SfmlWindowTest.cpp"
-    "Labyrinth Forge/Maze.cpp"
-    "Labyrinth Forge/Player.cpp"
 )
 
 target_compile_features(
@@ -49,15 +70,12 @@ target_compile_features(
 
 target_link_libraries(
     SfmlWindowTest
-    PRIVATE SFML::Graphics
+    PRIVATE LabyrinthForgeCore SFML::Graphics
 )
 
 add_executable(
     SfmlRendererSmoke
     "SfmlRendererSmoke/SfmlRendererSmoke.cpp"
-    "Labyrinth Forge/Maze.cpp"
-    "Labyrinth Forge/Player.cpp"
-    "Labyrinth Forge/SfmlRenderer.cpp"
 )
 
 target_compile_features(
@@ -67,5 +85,5 @@ target_compile_features(
 
 target_link_libraries(
     SfmlRendererSmoke
-    PRIVATE SFML::Graphics
+    PRIVATE LabyrinthForgeSfmlRenderer
 )

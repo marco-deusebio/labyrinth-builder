@@ -43,12 +43,12 @@
 		7CB31AD62FEEB2A0001F1209 /* libsfml-graphics.3.0.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libsfml-graphics.3.0.2.dylib"; sourceTree = "<group>"; };
 		7CB31AD72FEEB2A0001F1209 /* libsfml-window.3.0.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libsfml-window.3.0.2.dylib"; sourceTree = "<group>"; };
 		7CB31AD82FEEB2A0001F1209 /* libsfml-system.3.0.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libsfml-system.3.0.2.dylib"; sourceTree = "<group>"; };
-		7CB31AEC2FEEF700001F1209 /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libfreetype.6.dylib"; sourceTree = "<group>"; };
-		7CB31AED2FEEF700001F1209 /* libpng16.16.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libpng16.16.dylib"; sourceTree = "<group>"; };
 		7CB31AE12FEEF000001F1209 /* LabyrinthForgeShared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LabyrinthForgeShared.xcconfig; sourceTree = "<group>"; };
 		7CB31AE22FEEF000001F1209 /* LabyrinthForgeApp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LabyrinthForgeApp.xcconfig; sourceTree = "<group>"; };
 		7CB31AE32FEEF000001F1209 /* LabyrinthForgeApp-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LabyrinthForgeApp-Debug.xcconfig"; sourceTree = "<group>"; };
 		7CB31AE42FEEF000001F1209 /* LabyrinthForgeApp-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LabyrinthForgeApp-Release.xcconfig"; sourceTree = "<group>"; };
+		7CB31AEC2FEEF700001F1209 /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfreetype.6.dylib; sourceTree = "<group>"; };
+		7CB31AED2FEEF700001F1209 /* libpng16.16.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libpng16.16.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -155,13 +155,15 @@
 			);
 			sourceTree = "<group>";
 		};
-		7CB31AF02FEEFD00001F1209 /* Tests */ = {
+		7C2B54012FE5115500DF1AC6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7CB319F42FEE9C9D001F1209 /* SfmlRendererSmoke */,
-				7CB31A052FEE9D6B001F1209 /* SfmlWindowTest */,
+				7C2B54002FE5115500DF1AC6 /* Labyrinth Forge */,
+				7CB319F32FEE9C9D001F1209 /* SfmlRendererSmoke */,
+				7CB31A042FEE9D6B001F1209 /* SfmlWindowTest */,
+				7CB31AB82FEEAB12001F1209 /* Labyrinth Forge App.app */,
 			);
-			name = Tests;
+			name = Products;
 			sourceTree = "<group>";
 		};
 		7CB31AE02FEEF000001F1209 /* Config */ = {
@@ -235,15 +237,13 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
-		7C2B54012FE5115500DF1AC6 /* Products */ = {
+		7CB31AF02FEEFD00001F1209 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				7C2B54002FE5115500DF1AC6 /* Labyrinth Forge */,
-				7CB319F32FEE9C9D001F1209 /* SfmlRendererSmoke */,
-				7CB31A042FEE9D6B001F1209 /* SfmlWindowTest */,
-				7CB31AB82FEEAB12001F1209 /* Labyrinth Forge App.app */,
+				7CB319F42FEE9C9D001F1209 /* SfmlRendererSmoke */,
+				7CB31A052FEE9D6B001F1209 /* SfmlWindowTest */,
 			);
-			name = Products;
+			name = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
