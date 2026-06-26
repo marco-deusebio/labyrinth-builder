@@ -1,0 +1,10 @@
+//
+//  LabyrinthForgeShared.xcconfig
+//  Labyrinth Forge
+//
+//  Shared build settings.
+//
+
+CLANG_CXX_LANGUAGE_STANDARD = gnu++20
+HEADER_SEARCH_PATHS = $(inherited)
+

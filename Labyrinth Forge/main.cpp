@@ -5,10 +5,17 @@
 //  Created by Marco D’Eusebio on 6/18/26.
 //
 
+#include "ConsoleRenderer.hpp"
+#include "Game.hpp"
+
 #include <iostream>
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return EXIT_SUCCESS;
+int main()
+{
+    ConsoleRenderer renderer;
+    Game game(renderer);
+    
+    game.run();
+    
+    return 0;
 }

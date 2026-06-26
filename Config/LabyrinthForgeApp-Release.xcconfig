@@ -1,0 +1,7 @@
+//
+//  LabyrinthForgeApp-Release.xcconfig
+//  Labyrinth Forge
+//
+
+#include "LabyrinthForgeApp.xcconfig"
+

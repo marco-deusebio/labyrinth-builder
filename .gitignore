@@ -1,0 +1,18 @@
+# CMake build output
+build/
+cmake-build-*/
+
+# Xcode user-specific data
+**/xcuserdata/
+*.xcuserstate
+DerivedData/
+
+# macOS metadata
+.DS_Store
+docs/html/
+docs/latex/
+docs/xml/
+docs/man/
+docs/rtf/
+docs/docbook/
+.git-secret-scan-report.txt

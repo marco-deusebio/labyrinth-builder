@@ -6,26 +6,104 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7CB31AD02FEEB2A0001F1209 /* libsfml-graphics.3.0.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB31AD62FEEB2A0001F1209 /* libsfml-graphics.3.0.2.dylib */; };
+		7CB31AD12FEEB2A0001F1209 /* libsfml-window.3.0.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB31AD72FEEB2A0001F1209 /* libsfml-window.3.0.2.dylib */; };
+		7CB31AD22FEEB2A0001F1209 /* libsfml-system.3.0.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB31AD82FEEB2A0001F1209 /* libsfml-system.3.0.2.dylib */; };
+		7CB31AD32FEEB2A0001F1209 /* libsfml-graphics.3.0.2.dylib in Embed Runtime Dylibs */ = {isa = PBXBuildFile; fileRef = 7CB31AD62FEEB2A0001F1209 /* libsfml-graphics.3.0.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		7CB31AD42FEEB2A0001F1209 /* libsfml-window.3.0.2.dylib in Embed Runtime Dylibs */ = {isa = PBXBuildFile; fileRef = 7CB31AD72FEEB2A0001F1209 /* libsfml-window.3.0.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		7CB31AD52FEEB2A0001F1209 /* libsfml-system.3.0.2.dylib in Embed Runtime Dylibs */ = {isa = PBXBuildFile; fileRef = 7CB31AD82FEEB2A0001F1209 /* libsfml-system.3.0.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		7CB31AEE2FEEF700001F1209 /* libfreetype.6.dylib in Embed Runtime Dylibs */ = {isa = PBXBuildFile; fileRef = 7CB31AEC2FEEF700001F1209 /* libfreetype.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		7CB31AEF2FEEF700001F1209 /* libpng16.16.dylib in Embed Runtime Dylibs */ = {isa = PBXBuildFile; fileRef = 7CB31AED2FEEF700001F1209 /* libpng16.16.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
-		7C2B53FE2FE5115500DF1AC6 /* CopyFiles */ = {
+		7CB31AD92FEEB2A0001F1209 /* Embed Runtime Dylibs */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			dstPath = "";
+			dstSubfolderSpec = 10;
 			files = (
+				7CB31AD32FEEB2A0001F1209 /* libsfml-graphics.3.0.2.dylib in Embed Runtime Dylibs */,
+				7CB31AD42FEEB2A0001F1209 /* libsfml-window.3.0.2.dylib in Embed Runtime Dylibs */,
+				7CB31AD52FEEB2A0001F1209 /* libsfml-system.3.0.2.dylib in Embed Runtime Dylibs */,
+				7CB31AEE2FEEF700001F1209 /* libfreetype.6.dylib in Embed Runtime Dylibs */,
+				7CB31AEF2FEEF700001F1209 /* libpng16.16.dylib in Embed Runtime Dylibs */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			name = "Embed Runtime Dylibs";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		7C2B54002FE5115500DF1AC6 /* Labyrinth Forge */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Labyrinth Forge"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB319F32FEE9C9D001F1209 /* SfmlRendererSmoke */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SfmlRendererSmoke; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB31A042FEE9D6B001F1209 /* SfmlWindowTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SfmlWindowTest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB31AB82FEEAB12001F1209 /* Labyrinth Forge App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Labyrinth Forge App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB31AD62FEEB2A0001F1209 /* libsfml-graphics.3.0.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libsfml-graphics.3.0.2.dylib"; sourceTree = "<group>"; };
+		7CB31AD72FEEB2A0001F1209 /* libsfml-window.3.0.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libsfml-window.3.0.2.dylib"; sourceTree = "<group>"; };
+		7CB31AD82FEEB2A0001F1209 /* libsfml-system.3.0.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libsfml-system.3.0.2.dylib"; sourceTree = "<group>"; };
+		7CB31AEC2FEEF700001F1209 /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libfreetype.6.dylib"; sourceTree = "<group>"; };
+		7CB31AED2FEEF700001F1209 /* libpng16.16.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libpng16.16.dylib"; sourceTree = "<group>"; };
+		7CB31AE12FEEF000001F1209 /* LabyrinthForgeShared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LabyrinthForgeShared.xcconfig; sourceTree = "<group>"; };
+		7CB31AE22FEEF000001F1209 /* LabyrinthForgeApp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LabyrinthForgeApp.xcconfig; sourceTree = "<group>"; };
+		7CB31AE32FEEF000001F1209 /* LabyrinthForgeApp-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LabyrinthForgeApp-Debug.xcconfig"; sourceTree = "<group>"; };
+		7CB31AE42FEEF000001F1209 /* LabyrinthForgeApp-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LabyrinthForgeApp-Release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7CB319FD2FEE9CD4001F1209 /* Exceptions for "Labyrinth Forge" folder in "SfmlRendererSmoke" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Maze.cpp,
+				Player.cpp,
+				SfmlRenderer.cpp,
+			);
+			target = 7CB319F22FEE9C9D001F1209 /* SfmlRendererSmoke */;
+		};
+		7CB31A102FEE9DBD001F1209 /* Exceptions for "Labyrinth Forge" folder in "SfmlWindowTest" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Maze.cpp,
+				Player.cpp,
+			);
+			target = 7CB31A032FEE9D6B001F1209 /* SfmlWindowTest */;
+		};
+		7CB31ADA2FEEB2A0001F1209 /* Exceptions for "Labyrinth Forge" folder in "Labyrinth Forge App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Maze.cpp,
+				Player.cpp,
+				SfmlRenderer.cpp,
+			);
+			target = 7CB31AB72FEEAB12001F1209 /* Labyrinth Forge App */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7C2B54022FE5115500DF1AC6 /* Labyrinth Forge */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7CB319FD2FEE9CD4001F1209 /* Exceptions for "Labyrinth Forge" folder in "SfmlRendererSmoke" target */,
+				7CB31A102FEE9DBD001F1209 /* Exceptions for "Labyrinth Forge" folder in "SfmlWindowTest" target */,
+				7CB31ADA2FEEB2A0001F1209 /* Exceptions for "Labyrinth Forge" folder in "Labyrinth Forge App" target */,
+			);
 			path = "Labyrinth Forge";
+			sourceTree = "<group>";
+		};
+		7CB319F42FEE9C9D001F1209 /* SfmlRendererSmoke */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SfmlRendererSmoke;
+			sourceTree = "<group>";
+		};
+		7CB31A052FEE9D6B001F1209 /* SfmlWindowTest */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SfmlWindowTest;
+			sourceTree = "<group>";
+		};
+		7CB31AB92FEEAB12001F1209 /* Labyrinth Forge App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Labyrinth Forge App";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -38,21 +116,132 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7CB319F02FEE9C9D001F1209 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CB31A012FEE9D6B001F1209 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CB31AB52FEEAB12001F1209 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CB31AD02FEEB2A0001F1209 /* libsfml-graphics.3.0.2.dylib in Frameworks */,
+				7CB31AD12FEEB2A0001F1209 /* libsfml-window.3.0.2.dylib in Frameworks */,
+				7CB31AD22FEEB2A0001F1209 /* libsfml-system.3.0.2.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		7C2B53F72FE5115500DF1AC6 = {
 			isa = PBXGroup;
 			children = (
+				7CB31AB92FEEAB12001F1209 /* Labyrinth Forge App */,
 				7C2B54022FE5115500DF1AC6 /* Labyrinth Forge */,
+				7CB31AF02FEEFD00001F1209 /* Tests */,
+				7CB31AE02FEEF000001F1209 /* Config */,
+				7CB31AE52FEEF300001F1209 /* ThirdParty */,
 				7C2B54012FE5115500DF1AC6 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		7CB31AF02FEEFD00001F1209 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				7CB319F42FEE9C9D001F1209 /* SfmlRendererSmoke */,
+				7CB31A052FEE9D6B001F1209 /* SfmlWindowTest */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		7CB31AE02FEEF000001F1209 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				7CB31AE12FEEF000001F1209 /* LabyrinthForgeShared.xcconfig */,
+				7CB31AE22FEEF000001F1209 /* LabyrinthForgeApp.xcconfig */,
+				7CB31AE32FEEF000001F1209 /* LabyrinthForgeApp-Debug.xcconfig */,
+				7CB31AE42FEEF000001F1209 /* LabyrinthForgeApp-Release.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		7CB31AE52FEEF300001F1209 /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				7CB31AE62FEEF300001F1209 /* SFML */,
+				7CB31AE82FEEF700001F1209 /* FreeType */,
+				7CB31AEA2FEEF700001F1209 /* libpng */,
+			);
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		7CB31AE62FEEF300001F1209 /* SFML */ = {
+			isa = PBXGroup;
+			children = (
+				7CB31AE72FEEF300001F1209 /* lib */,
+			);
+			path = SFML;
+			sourceTree = "<group>";
+		};
+		7CB31AE72FEEF300001F1209 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				7CB31AD62FEEB2A0001F1209 /* libsfml-graphics.3.0.2.dylib */,
+				7CB31AD72FEEB2A0001F1209 /* libsfml-window.3.0.2.dylib */,
+				7CB31AD82FEEB2A0001F1209 /* libsfml-system.3.0.2.dylib */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		7CB31AE82FEEF700001F1209 /* FreeType */ = {
+			isa = PBXGroup;
+			children = (
+				7CB31AE92FEEF700001F1209 /* lib */,
+			);
+			path = FreeType;
+			sourceTree = "<group>";
+		};
+		7CB31AE92FEEF700001F1209 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				7CB31AEC2FEEF700001F1209 /* libfreetype.6.dylib */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		7CB31AEA2FEEF700001F1209 /* libpng */ = {
+			isa = PBXGroup;
+			children = (
+				7CB31AEB2FEEF700001F1209 /* lib */,
+			);
+			path = libpng;
+			sourceTree = "<group>";
+		};
+		7CB31AEB2FEEF700001F1209 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				7CB31AED2FEEF700001F1209 /* libpng16.16.dylib */,
+			);
+			path = lib;
 			sourceTree = "<group>";
 		};
 		7C2B54012FE5115500DF1AC6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				7C2B54002FE5115500DF1AC6 /* Labyrinth Forge */,
+				7CB319F32FEE9C9D001F1209 /* SfmlRendererSmoke */,
+				7CB31A042FEE9D6B001F1209 /* SfmlWindowTest */,
+				7CB31AB82FEEAB12001F1209 /* Labyrinth Forge App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -66,7 +255,6 @@
 			buildPhases = (
 				7C2B53FC2FE5115500DF1AC6 /* Sources */,
 				7C2B53FD2FE5115500DF1AC6 /* Frameworks */,
-				7C2B53FE2FE5115500DF1AC6 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -82,6 +270,71 @@
 			productReference = 7C2B54002FE5115500DF1AC6 /* Labyrinth Forge */;
 			productType = "com.apple.product-type.tool";
 		};
+		7CB319F22FEE9C9D001F1209 /* SfmlRendererSmoke */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CB319F72FEE9C9D001F1209 /* Build configuration list for PBXNativeTarget "SfmlRendererSmoke" */;
+			buildPhases = (
+				7CB319EF2FEE9C9D001F1209 /* Sources */,
+				7CB319F02FEE9C9D001F1209 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				7CB319F42FEE9C9D001F1209 /* SfmlRendererSmoke */,
+			);
+			name = SfmlRendererSmoke;
+			packageProductDependencies = (
+			);
+			productName = SfmlRendererSmoke;
+			productReference = 7CB319F32FEE9C9D001F1209 /* SfmlRendererSmoke */;
+			productType = "com.apple.product-type.tool";
+		};
+		7CB31A032FEE9D6B001F1209 /* SfmlWindowTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CB31A082FEE9D6B001F1209 /* Build configuration list for PBXNativeTarget "SfmlWindowTest" */;
+			buildPhases = (
+				7CB31A002FEE9D6B001F1209 /* Sources */,
+				7CB31A012FEE9D6B001F1209 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				7CB31A052FEE9D6B001F1209 /* SfmlWindowTest */,
+			);
+			name = SfmlWindowTest;
+			packageProductDependencies = (
+			);
+			productName = SfmlWindowTest;
+			productReference = 7CB31A042FEE9D6B001F1209 /* SfmlWindowTest */;
+			productType = "com.apple.product-type.tool";
+		};
+		7CB31AB72FEEAB12001F1209 /* Labyrinth Forge App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CB31AC62FEEAB14001F1209 /* Build configuration list for PBXNativeTarget "Labyrinth Forge App" */;
+			buildPhases = (
+				7CB31AB42FEEAB12001F1209 /* Sources */,
+				7CB31AB52FEEAB12001F1209 /* Frameworks */,
+				7CB31AB62FEEAB12001F1209 /* Resources */,
+				7CB31AD92FEEB2A0001F1209 /* Embed Runtime Dylibs */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				7CB31AB92FEEAB12001F1209 /* Labyrinth Forge App */,
+			);
+			name = "Labyrinth Forge App";
+			packageProductDependencies = (
+			);
+			productName = "Labyrinth Forge App";
+			productReference = 7CB31AB82FEEAB12001F1209 /* Labyrinth Forge App.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -92,6 +345,15 @@
 				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					7C2B53FF2FE5115500DF1AC6 = {
+						CreatedOnToolsVersion = 26.5;
+					};
+					7CB319F22FEE9C9D001F1209 = {
+						CreatedOnToolsVersion = 26.5;
+					};
+					7CB31A032FEE9D6B001F1209 = {
+						CreatedOnToolsVersion = 26.5;
+					};
+					7CB31AB72FEEAB12001F1209 = {
 						CreatedOnToolsVersion = 26.5;
 					};
 				};
@@ -111,12 +373,46 @@
 			projectRoot = "";
 			targets = (
 				7C2B53FF2FE5115500DF1AC6 /* Labyrinth Forge */,
+				7CB319F22FEE9C9D001F1209 /* SfmlRendererSmoke */,
+				7CB31A032FEE9D6B001F1209 /* SfmlWindowTest */,
+				7CB31AB72FEEAB12001F1209 /* Labyrinth Forge App */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		7CB31AB62FEEAB12001F1209 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7C2B53FC2FE5115500DF1AC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CB319EF2FEE9C9D001F1209 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CB31A002FEE9D6B001F1209 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CB31AB42FEEAB12001F1209 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -245,7 +541,24 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/lib,
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/lib,
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lsfml-graphics",
+					"-lsfml-window",
+					"-lsfml-system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = /opt/homebrew/include;
 			};
 			name = Debug;
 		};
@@ -253,7 +566,172 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/lib,
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/lib,
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lsfml-graphics",
+					"-lsfml-window",
+					"-lsfml-system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = /opt/homebrew/include;
+			};
+			name = Release;
+		};
+		7CB319F82FEE9C9D001F1209 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/lib,
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/lib,
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lsfml-graphics",
+					"-lsfml-window",
+					"-lsfml-system",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = /opt/homebrew/include;
+			};
+			name = Debug;
+		};
+		7CB319F92FEE9C9D001F1209 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/lib,
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/lib,
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lsfml-graphics",
+					"-lsfml-window",
+					"-lsfml-system",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = /opt/homebrew/include;
+			};
+			name = Release;
+		};
+		7CB31A092FEE9D6B001F1209 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/lib,
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/lib,
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lsfml-graphics",
+					"-lsfml-window",
+					"-lsfml-system",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = /opt/homebrew/include;
+			};
+			name = Debug;
+		};
+		7CB31A0A2FEE9D6B001F1209 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/lib,
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/lib,
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lsfml-graphics",
+					"-lsfml-window",
+					"-lsfml-system",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = /opt/homebrew/include;
+			};
+			name = Release;
+		};
+		7CB31AC42FEEAB14001F1209 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CB31AE32FEEF000001F1209 /* LabyrinthForgeApp-Debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Computer-Science.Labyrinth-Forge-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		7CB31AC52FEEAB14001F1209 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CB31AE42FEEF000001F1209 /* LabyrinthForgeApp-Release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Computer-Science.Labyrinth-Forge-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};
@@ -274,6 +752,33 @@
 			buildConfigurations = (
 				7C2B54082FE5115500DF1AC6 /* Debug */,
 				7C2B54092FE5115500DF1AC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CB319F72FEE9C9D001F1209 /* Build configuration list for PBXNativeTarget "SfmlRendererSmoke" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CB319F82FEE9C9D001F1209 /* Debug */,
+				7CB319F92FEE9C9D001F1209 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CB31A082FEE9D6B001F1209 /* Build configuration list for PBXNativeTarget "SfmlWindowTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CB31A092FEE9D6B001F1209 /* Debug */,
+				7CB31A0A2FEE9D6B001F1209 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CB31AC62FEEAB14001F1209 /* Build configuration list for PBXNativeTarget "Labyrinth Forge App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CB31AC42FEEAB14001F1209 /* Debug */,
+				7CB31AC52FEEAB14001F1209 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
