@@ -45,9 +45,3 @@ cmake --build build
 
 Open `Labyrinth Builder.xcodeproj` from this folder and build the available app or
 test schemes.
-
-## Split-project note
-
-This folder was split from the `codex/labyrinth-base-project` branch of the
-original `Labyrinth Forge` repo. It is now a standalone project folder with its
-own Git repository and no remote connected to the old combined source repo.
