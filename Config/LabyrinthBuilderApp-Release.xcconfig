@@ -1,0 +1,7 @@
+//
+//  LabyrinthBuilderApp-Release.xcconfig
+//  Labyrinth Builder
+//
+
+#include "LabyrinthBuilderApp.xcconfig"
+

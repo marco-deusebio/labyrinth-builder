@@ -1,6 +1,6 @@
 //
 //  AppDelegate.h
-//  Labyrinth Forge App
+//  Labyrinth Builder App
 //
 //  Created by Marco D’Eusebio on 6/26/26.
 //

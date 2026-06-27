@@ -1,4 +1,4 @@
-PROJECT_NAME           = "Labyrinth Forge"
+PROJECT_NAME           = "Labyrinth Builder"
 OUTPUT_DIRECTORY       = docs
 INPUT                  = .
 RECURSIVE              = YES

@@ -4,12 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Labyrinth Forge App.xcscheme_^#shared#^_</key>
+		<key>Labyrinth Builder App.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>Labyrinth Forge.xcscheme_^#shared#^_</key>
+		<key>Labyrinth Builder.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>

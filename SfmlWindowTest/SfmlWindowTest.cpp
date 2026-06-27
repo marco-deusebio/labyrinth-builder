@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 
-#include "../Labyrinth Forge/Maze.hpp"
-#include "../Labyrinth Forge/Player.hpp"
+#include "../Labyrinth Builder/Maze.hpp"
+#include "../Labyrinth Builder/Player.hpp"
 
 const sf::Color backgroundColor(12, 10, 10);
 const sf::Color floorColor(18, 16, 16);
@@ -224,7 +224,7 @@ void handleKeyPressed(
     }
     
     if (maze.isExit(player.getRow(), player.getColumn())) {
-        window.setTitle("Labyrinth Forge - Exit Reached!");
+        window.setTitle("Labyrinth Builder - Exit Reached!");
     }
 }
 
@@ -264,7 +264,7 @@ int main()
     
     sf::RenderWindow window(
         sf::VideoMode({windowWidth, windowHeight}),
-        "Labyrinth Forge"
+        "Labyrinth Builder"
     );
 
     window.setVerticalSyncEnabled(true);

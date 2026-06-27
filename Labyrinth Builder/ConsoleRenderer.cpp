@@ -1,6 +1,6 @@
 //
 //  ConsoleRenderer.cpp
-//  Labyrinth Forge
+//  Labyrinth Builder
 //
 //  Created by Marco D’Eusebio on 6/23/26.
 //

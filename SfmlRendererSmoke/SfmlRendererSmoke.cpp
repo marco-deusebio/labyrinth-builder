@@ -1,13 +1,13 @@
 //
 //  SfmlRendererSmoke.cpp
-//  Labyrinth Forge
+//  Labyrinth Builder
 //
 //  Created by Marco D’Eusebio on 6/26/26.
 //
 
-#include "../Labyrinth Forge/Maze.hpp"
-#include "../Labyrinth Forge/Player.hpp"
-#include "../Labyrinth Forge/SfmlRenderer.hpp"
+#include "../Labyrinth Builder/Maze.hpp"
+#include "../Labyrinth Builder/Player.hpp"
+#include "../Labyrinth Builder/SfmlRenderer.hpp"
 
 int main()
 {

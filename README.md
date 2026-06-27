@@ -23,7 +23,7 @@ cmake --build build
 
 ## Build with Xcode
 
-Open `Labyrinth Forge.xcodeproj` from this folder and build the available app or
+Open `Labyrinth Builder.xcodeproj` from this folder and build the available app or
 test schemes.
 
 ## Split-project note

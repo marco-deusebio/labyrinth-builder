@@ -1,6 +1,6 @@
 //
 //  Maze.cpp
-//  Labyrinth Forge
+//  Labyrinth Builder
 //
 //  Created by Marco D’Eusebio on 6/21/26.
 //

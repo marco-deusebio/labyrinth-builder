@@ -36,23 +36,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7C2B54002FE5115500DF1AC6 /* Labyrinth Forge */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Labyrinth Forge"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C2B54002FE5115500DF1AC6 /* Labyrinth Builder */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Labyrinth Builder"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB319F32FEE9C9D001F1209 /* SfmlRendererSmoke */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SfmlRendererSmoke; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB31A042FEE9D6B001F1209 /* SfmlWindowTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SfmlWindowTest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7CB31AB82FEEAB12001F1209 /* Labyrinth Forge App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Labyrinth Forge App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB31AB82FEEAB12001F1209 /* Labyrinth Builder App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Labyrinth Builder App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB31AD62FEEB2A0001F1209 /* libsfml-graphics.3.0.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libsfml-graphics.3.0.2.dylib"; sourceTree = "<group>"; };
 		7CB31AD72FEEB2A0001F1209 /* libsfml-window.3.0.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libsfml-window.3.0.2.dylib"; sourceTree = "<group>"; };
 		7CB31AD82FEEB2A0001F1209 /* libsfml-system.3.0.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libsfml-system.3.0.2.dylib"; sourceTree = "<group>"; };
-		7CB31AE12FEEF000001F1209 /* LabyrinthForgeShared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LabyrinthForgeShared.xcconfig; sourceTree = "<group>"; };
-		7CB31AE22FEEF000001F1209 /* LabyrinthForgeApp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LabyrinthForgeApp.xcconfig; sourceTree = "<group>"; };
-		7CB31AE32FEEF000001F1209 /* LabyrinthForgeApp-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LabyrinthForgeApp-Debug.xcconfig"; sourceTree = "<group>"; };
-		7CB31AE42FEEF000001F1209 /* LabyrinthForgeApp-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LabyrinthForgeApp-Release.xcconfig"; sourceTree = "<group>"; };
+		7CB31AE12FEEF000001F1209 /* LabyrinthBuilderShared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LabyrinthBuilderShared.xcconfig; sourceTree = "<group>"; };
+		7CB31AE22FEEF000001F1209 /* LabyrinthBuilderApp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LabyrinthBuilderApp.xcconfig; sourceTree = "<group>"; };
+		7CB31AE32FEEF000001F1209 /* LabyrinthBuilderApp-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LabyrinthBuilderApp-Debug.xcconfig"; sourceTree = "<group>"; };
+		7CB31AE42FEEF000001F1209 /* LabyrinthBuilderApp-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LabyrinthBuilderApp-Release.xcconfig"; sourceTree = "<group>"; };
 		7CB31AEC2FEEF700001F1209 /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfreetype.6.dylib; sourceTree = "<group>"; };
 		7CB31AED2FEEF700001F1209 /* libpng16.16.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libpng16.16.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		7CB319FD2FEE9CD4001F1209 /* Exceptions for "Labyrinth Forge" folder in "SfmlRendererSmoke" target */ = {
+		7CB319FD2FEE9CD4001F1209 /* Exceptions for "Labyrinth Builder" folder in "SfmlRendererSmoke" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Maze.cpp,
@@ -61,7 +61,7 @@
 			);
 			target = 7CB319F22FEE9C9D001F1209 /* SfmlRendererSmoke */;
 		};
-		7CB31A102FEE9DBD001F1209 /* Exceptions for "Labyrinth Forge" folder in "SfmlWindowTest" target */ = {
+		7CB31A102FEE9DBD001F1209 /* Exceptions for "Labyrinth Builder" folder in "SfmlWindowTest" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Maze.cpp,
@@ -69,26 +69,26 @@
 			);
 			target = 7CB31A032FEE9D6B001F1209 /* SfmlWindowTest */;
 		};
-		7CB31ADA2FEEB2A0001F1209 /* Exceptions for "Labyrinth Forge" folder in "Labyrinth Forge App" target */ = {
+		7CB31ADA2FEEB2A0001F1209 /* Exceptions for "Labyrinth Builder" folder in "Labyrinth Builder App" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Maze.cpp,
 				Player.cpp,
 				SfmlRenderer.cpp,
 			);
-			target = 7CB31AB72FEEAB12001F1209 /* Labyrinth Forge App */;
+			target = 7CB31AB72FEEAB12001F1209 /* Labyrinth Builder App */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		7C2B54022FE5115500DF1AC6 /* Labyrinth Forge */ = {
+		7C2B54022FE5115500DF1AC6 /* Labyrinth Builder */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				7CB319FD2FEE9CD4001F1209 /* Exceptions for "Labyrinth Forge" folder in "SfmlRendererSmoke" target */,
-				7CB31A102FEE9DBD001F1209 /* Exceptions for "Labyrinth Forge" folder in "SfmlWindowTest" target */,
-				7CB31ADA2FEEB2A0001F1209 /* Exceptions for "Labyrinth Forge" folder in "Labyrinth Forge App" target */,
+				7CB319FD2FEE9CD4001F1209 /* Exceptions for "Labyrinth Builder" folder in "SfmlRendererSmoke" target */,
+				7CB31A102FEE9DBD001F1209 /* Exceptions for "Labyrinth Builder" folder in "SfmlWindowTest" target */,
+				7CB31ADA2FEEB2A0001F1209 /* Exceptions for "Labyrinth Builder" folder in "Labyrinth Builder App" target */,
 			);
-			path = "Labyrinth Forge";
+			path = "Labyrinth Builder";
 			sourceTree = "<group>";
 		};
 		7CB319F42FEE9C9D001F1209 /* SfmlRendererSmoke */ = {
@@ -101,9 +101,9 @@
 			path = SfmlWindowTest;
 			sourceTree = "<group>";
 		};
-		7CB31AB92FEEAB12001F1209 /* Labyrinth Forge App */ = {
+		7CB31AB92FEEAB12001F1209 /* Labyrinth Builder App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Labyrinth Forge App";
+			path = "Labyrinth Builder App";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -146,8 +146,8 @@
 		7C2B53F72FE5115500DF1AC6 = {
 			isa = PBXGroup;
 			children = (
-				7CB31AB92FEEAB12001F1209 /* Labyrinth Forge App */,
-				7C2B54022FE5115500DF1AC6 /* Labyrinth Forge */,
+				7CB31AB92FEEAB12001F1209 /* Labyrinth Builder App */,
+				7C2B54022FE5115500DF1AC6 /* Labyrinth Builder */,
 				7CB31AF02FEEFD00001F1209 /* Tests */,
 				7CB31AE02FEEF000001F1209 /* Config */,
 				7CB31AE52FEEF300001F1209 /* ThirdParty */,
@@ -158,10 +158,10 @@
 		7C2B54012FE5115500DF1AC6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7C2B54002FE5115500DF1AC6 /* Labyrinth Forge */,
+				7C2B54002FE5115500DF1AC6 /* Labyrinth Builder */,
 				7CB319F32FEE9C9D001F1209 /* SfmlRendererSmoke */,
 				7CB31A042FEE9D6B001F1209 /* SfmlWindowTest */,
-				7CB31AB82FEEAB12001F1209 /* Labyrinth Forge App.app */,
+				7CB31AB82FEEAB12001F1209 /* Labyrinth Builder App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,10 +169,10 @@
 		7CB31AE02FEEF000001F1209 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				7CB31AE12FEEF000001F1209 /* LabyrinthForgeShared.xcconfig */,
-				7CB31AE22FEEF000001F1209 /* LabyrinthForgeApp.xcconfig */,
-				7CB31AE32FEEF000001F1209 /* LabyrinthForgeApp-Debug.xcconfig */,
-				7CB31AE42FEEF000001F1209 /* LabyrinthForgeApp-Release.xcconfig */,
+				7CB31AE12FEEF000001F1209 /* LabyrinthBuilderShared.xcconfig */,
+				7CB31AE22FEEF000001F1209 /* LabyrinthBuilderApp.xcconfig */,
+				7CB31AE32FEEF000001F1209 /* LabyrinthBuilderApp-Debug.xcconfig */,
+				7CB31AE42FEEF000001F1209 /* LabyrinthBuilderApp-Release.xcconfig */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -249,9 +249,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7C2B53FF2FE5115500DF1AC6 /* Labyrinth Forge */ = {
+		7C2B53FF2FE5115500DF1AC6 /* Labyrinth Builder */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7C2B54072FE5115500DF1AC6 /* Build configuration list for PBXNativeTarget "Labyrinth Forge" */;
+			buildConfigurationList = 7C2B54072FE5115500DF1AC6 /* Build configuration list for PBXNativeTarget "Labyrinth Builder" */;
 			buildPhases = (
 				7C2B53FC2FE5115500DF1AC6 /* Sources */,
 				7C2B53FD2FE5115500DF1AC6 /* Frameworks */,
@@ -261,13 +261,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				7C2B54022FE5115500DF1AC6 /* Labyrinth Forge */,
+				7C2B54022FE5115500DF1AC6 /* Labyrinth Builder */,
 			);
-			name = "Labyrinth Forge";
+			name = "Labyrinth Builder";
 			packageProductDependencies = (
 			);
-			productName = "Labyrinth Forge";
-			productReference = 7C2B54002FE5115500DF1AC6 /* Labyrinth Forge */;
+			productName = "Labyrinth Builder";
+			productReference = 7C2B54002FE5115500DF1AC6 /* Labyrinth Builder */;
 			productType = "com.apple.product-type.tool";
 		};
 		7CB319F22FEE9C9D001F1209 /* SfmlRendererSmoke */ = {
@@ -312,9 +312,9 @@
 			productReference = 7CB31A042FEE9D6B001F1209 /* SfmlWindowTest */;
 			productType = "com.apple.product-type.tool";
 		};
-		7CB31AB72FEEAB12001F1209 /* Labyrinth Forge App */ = {
+		7CB31AB72FEEAB12001F1209 /* Labyrinth Builder App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7CB31AC62FEEAB14001F1209 /* Build configuration list for PBXNativeTarget "Labyrinth Forge App" */;
+			buildConfigurationList = 7CB31AC62FEEAB14001F1209 /* Build configuration list for PBXNativeTarget "Labyrinth Builder App" */;
 			buildPhases = (
 				7CB31AB42FEEAB12001F1209 /* Sources */,
 				7CB31AB52FEEAB12001F1209 /* Frameworks */,
@@ -326,13 +326,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				7CB31AB92FEEAB12001F1209 /* Labyrinth Forge App */,
+				7CB31AB92FEEAB12001F1209 /* Labyrinth Builder App */,
 			);
-			name = "Labyrinth Forge App";
+			name = "Labyrinth Builder App";
 			packageProductDependencies = (
 			);
-			productName = "Labyrinth Forge App";
-			productReference = 7CB31AB82FEEAB12001F1209 /* Labyrinth Forge App.app */;
+			productName = "Labyrinth Builder App";
+			productReference = 7CB31AB82FEEAB12001F1209 /* Labyrinth Builder App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -358,7 +358,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7C2B53FB2FE5115500DF1AC6 /* Build configuration list for PBXProject "Labyrinth Forge" */;
+			buildConfigurationList = 7C2B53FB2FE5115500DF1AC6 /* Build configuration list for PBXProject "Labyrinth Builder" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -372,10 +372,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7C2B53FF2FE5115500DF1AC6 /* Labyrinth Forge */,
+				7C2B53FF2FE5115500DF1AC6 /* Labyrinth Builder */,
 				7CB319F22FEE9C9D001F1209 /* SfmlRendererSmoke */,
 				7CB31A032FEE9D6B001F1209 /* SfmlWindowTest */,
-				7CB31AB72FEEAB12001F1209 /* Labyrinth Forge App */,
+				7CB31AB72FEEAB12001F1209 /* Labyrinth Builder App */,
 			);
 		};
 /* End PBXProject section */
@@ -689,7 +689,7 @@
 		};
 		7CB31AC42FEEAB14001F1209 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7CB31AE32FEEF000001F1209 /* LabyrinthForgeApp-Debug.xcconfig */;
+			baseConfigurationReference = 7CB31AE32FEEF000001F1209 /* LabyrinthBuilderApp-Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -713,7 +713,7 @@
 		};
 		7CB31AC52FEEAB14001F1209 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7CB31AE42FEEF000001F1209 /* LabyrinthForgeApp-Release.xcconfig */;
+			baseConfigurationReference = 7CB31AE42FEEF000001F1209 /* LabyrinthBuilderApp-Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -738,7 +738,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7C2B53FB2FE5115500DF1AC6 /* Build configuration list for PBXProject "Labyrinth Forge" */ = {
+		7C2B53FB2FE5115500DF1AC6 /* Build configuration list for PBXProject "Labyrinth Builder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7C2B54052FE5115500DF1AC6 /* Debug */,
@@ -747,7 +747,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7C2B54072FE5115500DF1AC6 /* Build configuration list for PBXNativeTarget "Labyrinth Forge" */ = {
+		7C2B54072FE5115500DF1AC6 /* Build configuration list for PBXNativeTarget "Labyrinth Builder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7C2B54082FE5115500DF1AC6 /* Debug */,
@@ -774,7 +774,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7CB31AC62FEEAB14001F1209 /* Build configuration list for PBXNativeTarget "Labyrinth Forge App" */ = {
+		7CB31AC62FEEAB14001F1209 /* Build configuration list for PBXNativeTarget "Labyrinth Builder App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7CB31AC42FEEAB14001F1209 /* Debug */,

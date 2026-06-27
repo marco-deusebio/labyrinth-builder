@@ -1,6 +1,6 @@
 //
 //  main.cpp
-//  Labyrinth Forge
+//  Labyrinth Builder
 //
 //  Created by Marco D’Eusebio on 6/18/26.
 //

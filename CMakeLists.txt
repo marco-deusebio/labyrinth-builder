@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.28)
 
-project(LabyrinthForge LANGUAGES CXX)
+project(LabyrinthBuilder LANGUAGES CXX)
 
 include(FetchContent)
 
@@ -16,46 +16,46 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(SFML)
 
 add_library(
-    LabyrinthForgeCore
-    "Labyrinth Forge/Game.cpp"
-    "Labyrinth Forge/Maze.cpp"
-    "Labyrinth Forge/Player.cpp"
-    "Labyrinth Forge/ConsoleRenderer.cpp"
+    LabyrinthBuilderCore
+    "Labyrinth Builder/Game.cpp"
+    "Labyrinth Builder/Maze.cpp"
+    "Labyrinth Builder/Player.cpp"
+    "Labyrinth Builder/ConsoleRenderer.cpp"
 )
 
 target_compile_features(
-    LabyrinthForgeCore
+    LabyrinthBuilderCore
     PUBLIC cxx_std_20
 )
 
 target_include_directories(
-    LabyrinthForgeCore
-    PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Labyrinth Forge"
+    LabyrinthBuilderCore
+    PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Labyrinth Builder"
 )
 
 add_library(
-    LabyrinthForgeSfmlRenderer
-    "Labyrinth Forge/SfmlRenderer.cpp"
+    LabyrinthBuilderSfmlRenderer
+    "Labyrinth Builder/SfmlRenderer.cpp"
 )
 
 target_compile_features(
-    LabyrinthForgeSfmlRenderer
+    LabyrinthBuilderSfmlRenderer
     PUBLIC cxx_std_20
 )
 
 target_link_libraries(
-    LabyrinthForgeSfmlRenderer
-    PUBLIC LabyrinthForgeCore SFML::Graphics
+    LabyrinthBuilderSfmlRenderer
+    PUBLIC LabyrinthBuilderCore SFML::Graphics
 )
 
 add_executable(
-    LabyrinthForge
-    "Labyrinth Forge/main.cpp"
+    LabyrinthBuilder
+    "Labyrinth Builder/main.cpp"
 )
 
 target_link_libraries(
-    LabyrinthForge
-    PRIVATE LabyrinthForgeCore
+    LabyrinthBuilder
+    PRIVATE LabyrinthBuilderCore
 )
 
 add_executable(
@@ -70,7 +70,7 @@ target_compile_features(
 
 target_link_libraries(
     SfmlWindowTest
-    PRIVATE LabyrinthForgeCore SFML::Graphics
+    PRIVATE LabyrinthBuilderCore SFML::Graphics
 )
 
 add_executable(
@@ -85,5 +85,5 @@ target_compile_features(
 
 target_link_libraries(
     SfmlRendererSmoke
-    PRIVATE LabyrinthForgeSfmlRenderer
+    PRIVATE LabyrinthBuilderSfmlRenderer
 )

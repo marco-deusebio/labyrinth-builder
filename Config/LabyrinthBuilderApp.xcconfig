@@ -1,11 +1,11 @@
 //
-//  LabyrinthForgeApp.xcconfig
-//  Labyrinth Forge
+//  LabyrinthBuilderApp.xcconfig
+//  Labyrinth Builder
 //
 //  Shared settings for the macOS app bundle target.
 //
 
-#include "LabyrinthForgeShared.xcconfig"
+#include "LabyrinthBuilderShared.xcconfig"
 
 SFML_HEADER_PREFIX = /opt/homebrew
 SFML_LIBRARY_DIR = $(PROJECT_DIR)/ThirdParty/SFML/lib
@@ -14,5 +14,5 @@ SYSTEM_HEADER_SEARCH_PATHS = $(inherited) $(SFML_HEADER_PREFIX)/include
 LIBRARY_SEARCH_PATHS = $(inherited) $(SFML_LIBRARY_DIR)
 
 // This is the correct app-bundle runpath for dylibs embedded into:
-// Labyrinth Forge App.app/Contents/Frameworks
+// Labyrinth Builder App.app/Contents/Frameworks
 LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/../Frameworks

@@ -1,21 +1,21 @@
 //
-//  Renderer.hpp
-//  Labyrinth Forge
+//  ConsoleRenderer.hpp
+//  Labyrinth Builder
 //
 //  Created by Marco D’Eusebio on 6/23/26.
 //
 
 #pragma once
 
+#include "Renderer.hpp"
+
 class Maze;
 class Player;
 
-class Renderer {
+class ConsoleRenderer : public Renderer {
 public:
-    virtual ~Renderer() = default;
-    
-    virtual void render(
+    void render(
         const Maze& maze,
         const Player& player
-    ) = 0;
+    ) override;
 };

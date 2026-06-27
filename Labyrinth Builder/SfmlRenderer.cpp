@@ -1,6 +1,6 @@
 //
 //  SfmlRenderer.cpp
-//  Labyrinth Forge
+//  Labyrinth Builder
 //
 //  Created by Marco D’Eusebio on 6/26/26.
 //
@@ -557,7 +557,7 @@ SfmlRenderer::SfmlRenderer()
 SfmlRenderer::SfmlRenderer(SfmlRenderSettings initialSettings)
     : window(
           sf::VideoMode({minimumWindowWidth, minimumWindowHeight}),
-          "Labyrinth Forge"
+          "Labyrinth Builder"
       ),
       settings(initialSettings)
 {
@@ -790,7 +790,7 @@ void SfmlRenderer::updateWindowSize(const Maze& maze)
 void SfmlRenderer::updateWindowTitle()
 {
     window.setTitle(
-        "Labyrinth Forge - Labyrinth " +
+        "Labyrinth Builder - Labyrinth " +
         std::to_string(labyrinthLevel) +
         ", spacing " +
         std::to_string(static_cast<int>(settings.tileSpacing)) +
