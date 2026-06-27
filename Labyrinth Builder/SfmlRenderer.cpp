@@ -12,13 +12,18 @@
 
 #include <algorithm>
 #include <array>
+#include <cmath>
 #include <string>
 #include <vector>
 
 namespace {
 const sf::Color backgroundColor(12, 10, 10);
 const sf::Color floorColor(18, 16, 16);
+const sf::Color floorHighlightColor(32, 28, 25);
+const sf::Color floorShadeColor(9, 8, 8);
 const sf::Color wallColor(38, 35, 34);
+const sf::Color wallHighlightColor(74, 64, 56);
+const sf::Color wallLowerShadeColor(16, 13, 12);
 const sf::Color wallShadowColor(4, 3, 3);
 const sf::Color copperOutlineColor(116, 70, 38);
 const sf::Color startColor(216, 146, 45);
@@ -33,15 +38,14 @@ const sf::Color panelAccentColor(130, 82, 42);
 const sf::Color panelTextColor(224, 205, 178);
 const sf::Color panelMutedTextColor(160, 132, 105);
 
-constexpr float minimumTileSize = 24.f;
-constexpr float maximumTileSize = 72.f;
-constexpr float minimumTileSpacing = 0.f;
-constexpr float maximumTileSpacing = 12.f;
 constexpr float outerMarkerInsetRatio = 0.21f;
 constexpr float innerMarkerScale = 0.45f;
 constexpr float playerMarkerRadiusRatio = 0.33f;
 constexpr float playerShadowOffsetRatio = 0.06f;
 constexpr float wallShadowOffsetRatio = 0.08f;
+constexpr float wallHighlightRatio = 0.14f;
+constexpr float wallLowerShadeRatio = 0.18f;
+constexpr float floorHighlightRatio = 0.08f;
 constexpr float mazePanelGap = 28.f;
 constexpr float panelSlotLeftInset = 18.f;
 constexpr float panelSlotTop = 64.f;
@@ -51,6 +55,29 @@ constexpr float panelButtonSize = 26.f;
 constexpr float panelButtonGap = 8.f;
 constexpr unsigned int minimumWindowWidth = 920;
 constexpr unsigned int minimumWindowHeight = 632;
+constexpr float minimumReadableTileSize = 10.f;
+constexpr float minimumPanelHeight = 560.f;
+constexpr float minimumPanelGap = 16.f;
+constexpr float minimumFittedTextSize = 10.f;
+
+struct SfmlRenderLayout {
+    SfmlRenderSettings settings;
+    sf::Vector2u windowSize;
+    float mazeLeft = 0.f;
+    float mazeTop = 0.f;
+    float mazePixelWidth = 0.f;
+    float mazePixelHeight = 0.f;
+    float panelLeft = 0.f;
+    float panelTop = 0.f;
+    float panelHeight = 0.f;
+    float panelGap = mazePanelGap;
+    bool autoFitApplied = false;
+};
+
+struct MovementStep {
+    int rowChange = 0;
+    int columnChange = 0;
+};
 
 enum class PanelAction {
     none,
@@ -58,8 +85,72 @@ enum class PanelAction {
     increaseSpacing,
     decreaseTileSize,
     increaseTileSize,
+    decreasePanelWidth,
+    increasePanelWidth,
+    decreasePadding,
+    increasePadding,
     resetView
 };
+
+bool isMovementKey(sf::Keyboard::Key key)
+{
+    return key == sf::Keyboard::Key::Up ||
+           key == sf::Keyboard::Key::Down ||
+           key == sf::Keyboard::Key::Left ||
+           key == sf::Keyboard::Key::Right;
+}
+
+MovementStep getMovementStepForKey(sf::Keyboard::Key key)
+{
+    if (key == sf::Keyboard::Key::Up) {
+        return {-1, 0};
+    }
+    
+    if (key == sf::Keyboard::Key::Down) {
+        return {1, 0};
+    }
+    
+    if (key == sf::Keyboard::Key::Left) {
+        return {0, -1};
+    }
+    
+    if (key == sf::Keyboard::Key::Right) {
+        return {0, 1};
+    }
+    
+    return {};
+}
+
+float clampFloat(float value, float minimumValue, float maximumValue)
+{
+    return std::clamp(value, minimumValue, maximumValue);
+}
+
+SfmlRenderSettings getClampedSettings(SfmlRenderSettings settings)
+{
+    settings.tileSize = clampFloat(
+        settings.tileSize,
+        settings.minimumTileSize,
+        settings.maximumTileSize
+    );
+    settings.tileSpacing = clampFloat(
+        settings.tileSpacing,
+        settings.minimumTileSpacing,
+        settings.maximumTileSpacing
+    );
+    settings.windowPadding = clampFloat(
+        settings.windowPadding,
+        settings.minimumWindowPadding,
+        settings.maximumWindowPadding
+    );
+    settings.sidePanelWidth = clampFloat(
+        settings.sidePanelWidth,
+        settings.minimumSidePanelWidth,
+        settings.maximumSidePanelWidth
+    );
+    
+    return settings;
+}
 
 float getTilePitch(const SfmlRenderSettings& settings)
 {
@@ -92,6 +183,171 @@ float getPanelLeft(
     return settings.windowPadding +
            getMazePixelWidth(maze, settings) +
            mazePanelGap;
+}
+
+sf::Vector2u getMaximumWindowSize(const SfmlRenderSettings& settings)
+{
+    if (!settings.autoFitToDisplay) {
+        return {0u, 0u};
+    }
+    
+    const sf::Vector2u desktopSize = sf::VideoMode::getDesktopMode().size;
+    const unsigned int safetyMargin =
+        static_cast<unsigned int>(std::max(0.f, settings.displaySafetyMargin));
+    
+    return {
+        desktopSize.x > safetyMargin ? desktopSize.x - safetyMargin : desktopSize.x,
+        desktopSize.y > safetyMargin ? desktopSize.y - safetyMargin : desktopSize.y
+    };
+}
+
+SfmlRenderLayout calculateLayout(
+    const Maze& maze,
+    const SfmlRenderSettings& preferredSettings
+)
+{
+    SfmlRenderLayout layout;
+    layout.settings = getClampedSettings(preferredSettings);
+    
+    SfmlRenderSettings effectiveSettings = layout.settings;
+    const sf::Vector2u maximumWindowSize = getMaximumWindowSize(effectiveSettings);
+    const bool hasDisplayLimit =
+        maximumWindowSize.x > 0u &&
+        maximumWindowSize.y > 0u;
+    
+    auto calculateDesiredSize = [&maze](
+        const SfmlRenderSettings& currentSettings,
+        float currentGap
+    ) {
+        const float mazeWidth = getMazePixelWidth(maze, currentSettings);
+        const float mazeHeight = getMazePixelHeight(maze, currentSettings);
+        const float desiredWidth =
+            currentSettings.windowPadding +
+            mazeWidth +
+            currentGap +
+            currentSettings.sidePanelWidth +
+            currentSettings.windowPadding;
+        const float desiredHeight =
+            currentSettings.windowPadding +
+            std::max(mazeHeight, minimumPanelHeight) +
+            currentSettings.windowPadding;
+        
+        return sf::Vector2f{desiredWidth, desiredHeight};
+    };
+    
+    sf::Vector2f desiredSize = calculateDesiredSize(
+        effectiveSettings,
+        layout.panelGap
+    );
+    
+    if (hasDisplayLimit &&
+        (desiredSize.x > static_cast<float>(maximumWindowSize.x) ||
+         desiredSize.y > static_cast<float>(maximumWindowSize.y))) {
+        layout.autoFitApplied = true;
+        
+        effectiveSettings.windowPadding = effectiveSettings.minimumWindowPadding;
+        effectiveSettings.sidePanelWidth = std::clamp(
+            std::min(
+                effectiveSettings.sidePanelWidth,
+                static_cast<float>(maximumWindowSize.x) * 0.28f
+            ),
+            effectiveSettings.minimumSidePanelWidth,
+            effectiveSettings.maximumSidePanelWidth
+        );
+        layout.panelGap = minimumPanelGap;
+        
+        const float availableMazeWidth =
+            static_cast<float>(maximumWindowSize.x) -
+            effectiveSettings.windowPadding * 2.f -
+            layout.panelGap -
+            effectiveSettings.sidePanelWidth;
+        const float availableMazeHeight =
+            static_cast<float>(maximumWindowSize.y) -
+            effectiveSettings.windowPadding * 2.f;
+        const float widthLimitedTile =
+            (availableMazeWidth -
+             static_cast<float>(maze.getWidth() - 1) *
+                effectiveSettings.tileSpacing) /
+            static_cast<float>(maze.getWidth());
+        const float heightLimitedTile =
+            (availableMazeHeight -
+             static_cast<float>(maze.getHeight() - 1) *
+                effectiveSettings.tileSpacing) /
+            static_cast<float>(maze.getHeight());
+        
+        effectiveSettings.tileSize = std::min(
+            effectiveSettings.tileSize,
+            std::min(widthLimitedTile, heightLimitedTile)
+        );
+        
+        if (effectiveSettings.tileSize < effectiveSettings.minimumTileSize &&
+            effectiveSettings.tileSpacing > effectiveSettings.minimumTileSpacing) {
+            effectiveSettings.tileSpacing = effectiveSettings.minimumTileSpacing;
+            
+            const float spacingFreeWidthTile =
+                availableMazeWidth / static_cast<float>(maze.getWidth());
+            const float spacingFreeHeightTile =
+                availableMazeHeight / static_cast<float>(maze.getHeight());
+            
+            effectiveSettings.tileSize = std::min(
+                preferredSettings.tileSize,
+                std::min(spacingFreeWidthTile, spacingFreeHeightTile)
+            );
+        }
+        
+        effectiveSettings.tileSize = std::max(
+            minimumReadableTileSize,
+            effectiveSettings.tileSize
+        );
+        desiredSize = calculateDesiredSize(effectiveSettings, layout.panelGap);
+    }
+    
+    layout.settings = effectiveSettings;
+    layout.mazePixelWidth = getMazePixelWidth(maze, layout.settings);
+    layout.mazePixelHeight = getMazePixelHeight(maze, layout.settings);
+    
+    const unsigned int desiredWindowWidth = static_cast<unsigned int>(
+        std::ceil(desiredSize.x)
+    );
+    const unsigned int desiredWindowHeight = static_cast<unsigned int>(
+        std::ceil(desiredSize.y)
+    );
+    
+    const unsigned int minimumWidth =
+        hasDisplayLimit && layout.autoFitApplied ?
+            std::min(minimumWindowWidth, maximumWindowSize.x) :
+            minimumWindowWidth;
+    const unsigned int minimumHeight =
+        hasDisplayLimit && layout.autoFitApplied ?
+            std::min(minimumWindowHeight, maximumWindowSize.y) :
+            minimumWindowHeight;
+    
+    layout.windowSize = {
+        std::max(minimumWidth, desiredWindowWidth),
+        std::max(minimumHeight, desiredWindowHeight)
+    };
+    
+    if (hasDisplayLimit && layout.autoFitApplied) {
+        layout.windowSize.x = std::min(
+            layout.windowSize.x,
+            maximumWindowSize.x
+        );
+        layout.windowSize.y = std::min(
+            layout.windowSize.y,
+            maximumWindowSize.y
+        );
+    }
+    
+    layout.mazeLeft = layout.settings.windowPadding;
+    layout.mazeTop = layout.settings.windowPadding;
+    layout.panelLeft =
+        layout.mazeLeft +
+        layout.mazePixelWidth +
+        layout.panelGap;
+    layout.panelTop = layout.mazeTop;
+    layout.panelHeight = std::max(layout.mazePixelHeight, minimumPanelHeight);
+    
+    return layout;
 }
 
 sf::FloatRect getPanelSlotBounds(
@@ -166,7 +422,27 @@ PanelAction getPanelActionAt(
         return PanelAction::increaseTileSize;
     }
     
-    if (getPanelSlotBounds(panelLeft, panelTop, 3, settings)
+    if (getPanelButtonBounds(panelLeft, panelTop, 3, 0, settings)
+            .contains(mousePosition)) {
+        return PanelAction::decreasePanelWidth;
+    }
+    
+    if (getPanelButtonBounds(panelLeft, panelTop, 3, 1, settings)
+            .contains(mousePosition)) {
+        return PanelAction::increasePanelWidth;
+    }
+    
+    if (getPanelButtonBounds(panelLeft, panelTop, 4, 0, settings)
+            .contains(mousePosition)) {
+        return PanelAction::decreasePadding;
+    }
+    
+    if (getPanelButtonBounds(panelLeft, panelTop, 4, 1, settings)
+            .contains(mousePosition)) {
+        return PanelAction::increasePadding;
+    }
+    
+    if (getPanelSlotBounds(panelLeft, panelTop, 5, settings)
             .contains(mousePosition)) {
         return PanelAction::resetView;
     }
@@ -228,7 +504,8 @@ sf::Vector2f getTilePosition(
 }
 
 sf::Vector2f getPlayerPosition(
-    const Player& player,
+    float playerRow,
+    float playerColumn,
     const sf::CircleShape& playerMarker,
     float mazeLeft,
     float mazeTop,
@@ -239,18 +516,18 @@ sf::Vector2f getPlayerPosition(
     
     return {
         mazeLeft +
-        static_cast<float>(player.getColumn()) * tilePitch +
+        playerColumn * tilePitch +
         settings.tileSize / 2.f -
         playerMarker.getRadius(),
         
         mazeTop +
-        static_cast<float>(player.getRow()) * tilePitch +
+        playerRow * tilePitch +
         settings.tileSize / 2.f -
         playerMarker.getRadius()
     };
 }
 
-void tryMovePlayer(
+bool tryMovePlayer(
     const Maze& maze,
     Player& player,
     int rowChange,
@@ -262,23 +539,39 @@ void tryMovePlayer(
     
     if (maze.isWalkable(nextRow, nextColumn)) {
         player.move(rowChange, columnChange);
+        return true;
     }
+    
+    return false;
 }
 
 void drawFloor(
     sf::RenderWindow& window,
     sf::RectangleShape& floorTile,
+    sf::RectangleShape& floorHighlight,
+    sf::RectangleShape& floorShade,
     sf::Vector2f tilePosition
 )
 {
     floorTile.setPosition(tilePosition);
     window.draw(floorTile);
+    
+    floorHighlight.setPosition(tilePosition);
+    window.draw(floorHighlight);
+    
+    floorShade.setPosition({
+        tilePosition.x,
+        tilePosition.y + floorTile.getSize().y - floorShade.getSize().y
+    });
+    window.draw(floorShade);
 }
 
 void drawWall(
     sf::RenderWindow& window,
     sf::RectangleShape& wallShadowTile,
     sf::RectangleShape& wallTile,
+    sf::RectangleShape& wallHighlight,
+    sf::RectangleShape& wallLowerShade,
     sf::Vector2f tilePosition,
     const SfmlRenderSettings& settings
 )
@@ -294,6 +587,18 @@ void drawWall(
     
     wallTile.setPosition(tilePosition);
     window.draw(wallTile);
+    
+    wallHighlight.setPosition({
+        tilePosition.x,
+        tilePosition.y
+    });
+    window.draw(wallHighlight);
+    
+    wallLowerShade.setPosition({
+        tilePosition.x,
+        tilePosition.y + settings.tileSize - wallLowerShade.getSize().y
+    });
+    window.draw(wallLowerShade);
 }
 
 void drawMarker(
@@ -324,9 +629,11 @@ void drawMarker(
 
 void drawPlayer(
     sf::RenderWindow& window,
-    const Player& player,
+    float playerRow,
+    float playerColumn,
     sf::CircleShape& playerShadow,
     sf::CircleShape& playerMarker,
+    sf::CircleShape& playerHighlight,
     float mazeLeft,
     float mazeTop,
     const SfmlRenderSettings& settings
@@ -336,7 +643,8 @@ void drawPlayer(
         std::max(1.f, settings.tileSize * playerShadowOffsetRatio);
     
     sf::Vector2f playerPosition = getPlayerPosition(
-        player,
+        playerRow,
+        playerColumn,
         playerMarker,
         mazeLeft,
         mazeTop,
@@ -351,16 +659,26 @@ void drawPlayer(
     
     playerMarker.setPosition(playerPosition);
     window.draw(playerMarker);
+    
+    playerHighlight.setPosition({
+        playerPosition.x + playerMarker.getRadius() * 0.5f,
+        playerPosition.y + playerMarker.getRadius() * 0.38f
+    });
+    window.draw(playerHighlight);
 }
 
 void drawMaze(
     sf::RenderWindow& window,
     const Maze& maze,
     sf::RectangleShape& floorTile,
+    sf::RectangleShape& floorHighlight,
+    sf::RectangleShape& floorShade,
     sf::CircleShape& outerMarker,
     sf::CircleShape& innerMarker,
     sf::RectangleShape& wallShadowTile,
     sf::RectangleShape& wallTile,
+    sf::RectangleShape& wallHighlight,
+    sf::RectangleShape& wallLowerShade,
     float mazeLeft,
     float mazeTop,
     const SfmlRenderSettings& settings
@@ -378,13 +696,21 @@ void drawMaze(
                 settings
             );
 
-            drawFloor(window, floorTile, tilePosition);
+            drawFloor(
+                window,
+                floorTile,
+                floorHighlight,
+                floorShade,
+                tilePosition
+            );
             
             if (cell == 'X') {
                 drawWall(
                     window,
                     wallShadowTile,
                     wallTile,
+                    wallHighlight,
+                    wallLowerShade,
                     tilePosition,
                     settings
                 );
@@ -402,12 +728,83 @@ void drawMaze(
     }
 }
 
+unsigned int getFittedCharacterSize(
+    const sf::Font& font,
+    const std::string& text,
+    unsigned int preferredSize,
+    float maximumWidth
+)
+{
+    unsigned int fittedSize = preferredSize;
+    
+    while (fittedSize > static_cast<unsigned int>(minimumFittedTextSize)) {
+        sf::Text measuredText(font, text, fittedSize);
+        
+        if (measuredText.getLocalBounds().size.x <= maximumWidth) {
+            return fittedSize;
+        }
+        
+        --fittedSize;
+    }
+    
+    return static_cast<unsigned int>(minimumFittedTextSize);
+}
+
+void drawFittedText(
+    sf::RenderWindow& window,
+    const sf::Font& font,
+    const std::string& text,
+    unsigned int preferredSize,
+    sf::Vector2f position,
+    float maximumWidth,
+    sf::Color color
+)
+{
+    sf::Text fittedText(
+        font,
+        text,
+        getFittedCharacterSize(font, text, preferredSize, maximumWidth)
+    );
+    
+    fittedText.setFillColor(color);
+    fittedText.setPosition(position);
+    window.draw(fittedText);
+}
+
+void drawCenteredFittedText(
+    sf::RenderWindow& window,
+    const sf::Font& font,
+    const std::string& text,
+    unsigned int preferredSize,
+    const sf::FloatRect& bounds,
+    sf::Color color
+)
+{
+    sf::Text fittedText(
+        font,
+        text,
+        getFittedCharacterSize(font, text, preferredSize, bounds.size.x - 8.f)
+    );
+    const sf::FloatRect localBounds = fittedText.getLocalBounds();
+    
+    fittedText.setFillColor(color);
+    fittedText.setPosition({
+        bounds.position.x + (bounds.size.x - localBounds.size.x) / 2.f -
+            localBounds.position.x,
+        bounds.position.y + (bounds.size.y - localBounds.size.y) / 2.f -
+            localBounds.position.y - 1.f
+    });
+    window.draw(fittedText);
+}
+
 void drawInterfacePanel(
     sf::RenderWindow& window,
     float panelLeft,
     float panelTop,
     float panelHeight,
     const SfmlRenderSettings& settings,
+    const SfmlRenderSettings& preferredSettings,
+    bool autoFitApplied,
     const sf::Font* font,
     int labyrinthLevel,
     const Maze& maze
@@ -433,10 +830,20 @@ void drawInterfacePanel(
     titleBar.setFillColor(panelAccentColor);
     window.draw(titleBar);
     
-    const std::array<std::string, 4> labels{
+    const std::array<std::string, 6> labels{
         "Move: Arrow Keys",
-        "Spacing: - / +",
-        "Tile Size: [ / ]",
+        "Spacing: " +
+            std::to_string(static_cast<int>(preferredSettings.tileSpacing)) +
+            " px",
+        "Tile: " +
+            std::to_string(static_cast<int>(preferredSettings.tileSize)) +
+            " px",
+        "Panel: " +
+            std::to_string(static_cast<int>(preferredSettings.sidePanelWidth)) +
+            " px",
+        "Padding: " +
+            std::to_string(static_cast<int>(preferredSettings.windowPadding)) +
+            " px",
         "Reset View: R"
     };
     
@@ -469,17 +876,32 @@ void drawInterfacePanel(
         window.draw(accent);
         
         if (font != nullptr) {
-            sf::Text label(*font, labels[index], 16);
+            const float reservedButtonWidth =
+                (index >= 1 && index <= 4) ?
+                    panelButtonSize * 2.f + panelButtonGap + 14.f :
+                    0.f;
             
-            label.setFillColor(panelTextColor);
-            label.setPosition({
-                panelLeft + 50.f,
-                panelTop + 76.f + static_cast<float>(index) * 56.f
-            });
-            window.draw(label);
+            drawFittedText(
+                window,
+                *font,
+                labels[index],
+                16,
+                {
+                    panelLeft + 50.f,
+                    panelTop + 76.f + static_cast<float>(index) * 56.f
+                },
+                std::max(
+                    48.f,
+                    settings.sidePanelWidth -
+                        panelSlotLeftInset * 2.f -
+                        32.f -
+                        reservedButtonWidth
+                ),
+                panelTextColor
+            );
         }
         
-        if (index == 1 || index == 2) {
+        if (index >= 1 && index <= 4) {
             for (std::size_t buttonIndex = 0; buttonIndex < 2; ++buttonIndex) {
                 sf::FloatRect buttonBounds = getPanelButtonBounds(
                     panelLeft,
@@ -497,18 +919,14 @@ void drawInterfacePanel(
                 window.draw(button);
                 
                 if (font != nullptr) {
-                    sf::Text buttonLabel(
+                    drawCenteredFittedText(
+                        window,
                         *font,
                         buttonIndex == 0 ? "-" : "+",
-                        18
+                        18,
+                        buttonBounds,
+                        panelTextColor
                     );
-                    
-                    buttonLabel.setFillColor(panelTextColor);
-                    buttonLabel.setPosition({
-                        buttonBounds.position.x + 8.f,
-                        buttonBounds.position.y + 1.f
-                    });
-                    window.draw(buttonLabel);
                 }
             }
         }
@@ -518,33 +936,42 @@ void drawInterfacePanel(
         return;
     }
     
-    sf::Text title(*font, "LABYRINTH FORGE", 22);
-    title.setFillColor(panelTextColor);
-    title.setPosition({panelLeft + 18.f, panelTop + 42.f});
-    window.draw(title);
+    drawFittedText(
+        window,
+        *font,
+        "LABYRINTH BUILDER",
+        22,
+        {panelLeft + 18.f, panelTop + 42.f},
+        settings.sidePanelWidth - 36.f,
+        panelTextColor
+    );
     
     std::vector<std::string> statusLines{
         "Labyrinth: " + std::to_string(labyrinthLevel),
         "Size: " + std::to_string(maze.getWidth()) + " x " +
             std::to_string(maze.getHeight()),
-        "Tile: " + std::to_string(static_cast<int>(settings.tileSize)) +
+        "Rendered tile: " +
+            std::to_string(static_cast<int>(std::round(settings.tileSize))) +
             " px",
-        "Spacing: " +
-            std::to_string(static_cast<int>(settings.tileSpacing)) + " px",
+        autoFitApplied ? "Auto-fit: On" : "Auto-fit: Ready",
         "Esc: Quit"
     };
     
-    const float statusTop = panelTop + panelHeight - 112.f;
+    const float statusTop = panelTop + panelHeight - 136.f;
     
     for (std::size_t index = 0; index < statusLines.size(); ++index) {
-        sf::Text status(*font, statusLines[index], 15);
-        
-        status.setFillColor(panelMutedTextColor);
-        status.setPosition({
-            panelLeft + 18.f,
-            statusTop + static_cast<float>(index) * 24.f
-        });
-        window.draw(status);
+        drawFittedText(
+            window,
+            *font,
+            statusLines[index],
+            15,
+            {
+                panelLeft + 18.f,
+                statusTop + static_cast<float>(index) * 24.f
+            },
+            settings.sidePanelWidth - 36.f,
+            panelMutedTextColor
+        );
     }
 }
 }
@@ -562,6 +989,7 @@ SfmlRenderer::SfmlRenderer(SfmlRenderSettings initialSettings)
       settings(initialSettings)
 {
     window.setVerticalSyncEnabled(true);
+    window.setKeyRepeatEnabled(false);
     loadInterfaceFont();
     updateWindowTitle();
 }
@@ -601,10 +1029,14 @@ void SfmlRenderer::processEvents()
 {
     while (const auto event = window.pollEvent()) {
         if (event->is<sf::Event::Closed>()) {
+            resetMovementInput();
             window.close();
         } else if (const auto* keyPressed =
                    event->getIf<sf::Event::KeyPressed>()) {
             processKeyPress(*keyPressed);
+        } else if (const auto* keyReleased =
+                   event->getIf<sf::Event::KeyReleased>()) {
+            processKeyRelease(*keyReleased);
         }
     }
 }
@@ -616,15 +1048,21 @@ void SfmlRenderer::processEvents(
 {
     while (const auto event = window.pollEvent()) {
         if (event->is<sf::Event::Closed>()) {
+            resetMovementInput();
             window.close();
         } else if (const auto* keyPressed =
                    event->getIf<sf::Event::KeyPressed>()) {
             processKeyPress(*keyPressed, maze, player);
+        } else if (const auto* keyReleased =
+                   event->getIf<sf::Event::KeyReleased>()) {
+            processKeyRelease(*keyReleased);
         } else if (const auto* mouseButton =
                    event->getIf<sf::Event::MouseButtonPressed>()) {
             processMouseClick(*mouseButton, maze);
         }
     }
+    
+    updateHeldMovement(maze, player);
 }
 
 void SfmlRenderer::processKeyPress(
@@ -632,13 +1070,14 @@ void SfmlRenderer::processKeyPress(
 )
 {
     if (keyPressed.code == sf::Keyboard::Key::Escape) {
+        resetMovementInput();
         window.close();
     } else if (
         keyPressed.code == sf::Keyboard::Key::Equal ||
         keyPressed.code == sf::Keyboard::Key::Add
     ) {
         settings.tileSpacing = std::min(
-            maximumTileSpacing,
+            settings.maximumTileSpacing,
             settings.tileSpacing + 1.f
         );
         updateWindowTitle();
@@ -647,25 +1086,51 @@ void SfmlRenderer::processKeyPress(
         keyPressed.code == sf::Keyboard::Key::Subtract
     ) {
         settings.tileSpacing = std::max(
-            minimumTileSpacing,
+            settings.minimumTileSpacing,
             settings.tileSpacing - 1.f
         );
         updateWindowTitle();
     } else if (keyPressed.code == sf::Keyboard::Key::RBracket) {
         settings.tileSize = std::min(
-            maximumTileSize,
+            settings.maximumTileSize,
             settings.tileSize + 2.f
         );
         updateWindowTitle();
     } else if (keyPressed.code == sf::Keyboard::Key::LBracket) {
         settings.tileSize = std::max(
-            minimumTileSize,
+            settings.minimumTileSize,
             settings.tileSize - 2.f
+        );
+        updateWindowTitle();
+    } else if (keyPressed.code == sf::Keyboard::Key::P) {
+        settings.sidePanelWidth = std::min(
+            settings.maximumSidePanelWidth,
+            settings.sidePanelWidth + 10.f
+        );
+        updateWindowTitle();
+    } else if (keyPressed.code == sf::Keyboard::Key::O) {
+        settings.sidePanelWidth = std::max(
+            settings.minimumSidePanelWidth,
+            settings.sidePanelWidth - 10.f
+        );
+        updateWindowTitle();
+    } else if (keyPressed.code == sf::Keyboard::Key::I) {
+        settings.windowPadding = std::min(
+            settings.maximumWindowPadding,
+            settings.windowPadding + 4.f
+        );
+        updateWindowTitle();
+    } else if (keyPressed.code == sf::Keyboard::Key::U) {
+        settings.windowPadding = std::max(
+            settings.minimumWindowPadding,
+            settings.windowPadding - 4.f
         );
         updateWindowTitle();
     } else if (keyPressed.code == sf::Keyboard::Key::R) {
         settings.tileSize = SfmlRenderSettings{}.tileSize;
         settings.tileSpacing = SfmlRenderSettings{}.tileSpacing;
+        settings.windowPadding = SfmlRenderSettings{}.windowPadding;
+        settings.sidePanelWidth = SfmlRenderSettings{}.sidePanelWidth;
         updateWindowTitle();
     }
 }
@@ -678,15 +1143,98 @@ void SfmlRenderer::processKeyPress(
 {
     processKeyPress(keyPressed);
     
-    if (keyPressed.code == sf::Keyboard::Key::Up) {
-        tryMovePlayer(maze, player, -1, 0);
-    } else if (keyPressed.code == sf::Keyboard::Key::Down) {
-        tryMovePlayer(maze, player, 1, 0);
-    } else if (keyPressed.code == sf::Keyboard::Key::Left) {
-        tryMovePlayer(maze, player, 0, -1);
-    } else if (keyPressed.code == sf::Keyboard::Key::Right) {
-        tryMovePlayer(maze, player, 0, 1);
+    if (!isMovementKey(keyPressed.code)) {
+        return;
     }
+    
+    if (keyPressed.code == sf::Keyboard::Key::Up) {
+        movingUp = true;
+    } else if (keyPressed.code == sf::Keyboard::Key::Down) {
+        movingDown = true;
+    } else if (keyPressed.code == sf::Keyboard::Key::Left) {
+        movingLeft = true;
+    } else if (keyPressed.code == sf::Keyboard::Key::Right) {
+        movingRight = true;
+    }
+    
+    activeMovementKey = keyPressed.code;
+    
+    const MovementStep movementStep = getMovementStepForKey(activeMovementKey);
+    (void)tryMovePlayer(
+        maze,
+        player,
+        movementStep.rowChange,
+        movementStep.columnChange
+    );
+    movementClock.restart();
+}
+
+void SfmlRenderer::processKeyRelease(
+    const sf::Event::KeyReleased& keyReleased
+)
+{
+    if (keyReleased.code == sf::Keyboard::Key::Up) {
+        movingUp = false;
+    } else if (keyReleased.code == sf::Keyboard::Key::Down) {
+        movingDown = false;
+    } else if (keyReleased.code == sf::Keyboard::Key::Left) {
+        movingLeft = false;
+    } else if (keyReleased.code == sf::Keyboard::Key::Right) {
+        movingRight = false;
+    }
+    
+    if (activeMovementKey != keyReleased.code) {
+        return;
+    }
+    
+    if (movingUp) {
+        activeMovementKey = sf::Keyboard::Key::Up;
+    } else if (movingDown) {
+        activeMovementKey = sf::Keyboard::Key::Down;
+    } else if (movingLeft) {
+        activeMovementKey = sf::Keyboard::Key::Left;
+    } else if (movingRight) {
+        activeMovementKey = sf::Keyboard::Key::Right;
+    } else {
+        activeMovementKey = sf::Keyboard::Key::Unknown;
+    }
+}
+
+void SfmlRenderer::updateHeldMovement(
+    const Maze& maze,
+    Player& player
+)
+{
+    if (!isMovementKey(activeMovementKey)) {
+        return;
+    }
+    
+    const float movementStepSeconds = std::max(
+        0.035f,
+        settings.movementStepSeconds
+    );
+    
+    if (movementClock.getElapsedTime().asSeconds() < movementStepSeconds) {
+        return;
+    }
+    
+    const MovementStep movementStep = getMovementStepForKey(activeMovementKey);
+    (void)tryMovePlayer(
+        maze,
+        player,
+        movementStep.rowChange,
+        movementStep.columnChange
+    );
+    movementClock.restart();
+}
+
+void SfmlRenderer::resetMovementInput()
+{
+    movingUp = false;
+    movingDown = false;
+    movingLeft = false;
+    movingRight = false;
+    activeMovementKey = sf::Keyboard::Key::Unknown;
 }
 
 void SfmlRenderer::processMouseClick(
@@ -698,17 +1246,23 @@ void SfmlRenderer::processMouseClick(
         return;
     }
     
-    const float panelLeft = getPanelLeft(maze, settings);
-    const float panelTop = settings.windowPadding;
+    const SfmlRenderLayout layout = calculateLayout(maze, settings);
+    const float panelLeft = layout.panelLeft;
+    const float panelTop = layout.panelTop;
     const sf::Vector2f mousePosition{
         static_cast<float>(mouseButton.position.x),
         static_cast<float>(mouseButton.position.y)
     };
     
-    switch (getPanelActionAt(mousePosition, panelLeft, panelTop, settings)) {
+    switch (getPanelActionAt(
+        mousePosition,
+        panelLeft,
+        panelTop,
+        layout.settings
+    )) {
         case PanelAction::decreaseSpacing:
             settings.tileSpacing = std::max(
-                minimumTileSpacing,
+                settings.minimumTileSpacing,
                 settings.tileSpacing - 1.f
             );
             updateWindowTitle();
@@ -716,7 +1270,7 @@ void SfmlRenderer::processMouseClick(
             
         case PanelAction::increaseSpacing:
             settings.tileSpacing = std::min(
-                maximumTileSpacing,
+                settings.maximumTileSpacing,
                 settings.tileSpacing + 1.f
             );
             updateWindowTitle();
@@ -724,7 +1278,7 @@ void SfmlRenderer::processMouseClick(
             
         case PanelAction::decreaseTileSize:
             settings.tileSize = std::max(
-                minimumTileSize,
+                settings.minimumTileSize,
                 settings.tileSize - 2.f
             );
             updateWindowTitle();
@@ -732,8 +1286,40 @@ void SfmlRenderer::processMouseClick(
             
         case PanelAction::increaseTileSize:
             settings.tileSize = std::min(
-                maximumTileSize,
+                settings.maximumTileSize,
                 settings.tileSize + 2.f
+            );
+            updateWindowTitle();
+            break;
+            
+        case PanelAction::decreasePanelWidth:
+            settings.sidePanelWidth = std::max(
+                settings.minimumSidePanelWidth,
+                settings.sidePanelWidth - 10.f
+            );
+            updateWindowTitle();
+            break;
+            
+        case PanelAction::increasePanelWidth:
+            settings.sidePanelWidth = std::min(
+                settings.maximumSidePanelWidth,
+                settings.sidePanelWidth + 10.f
+            );
+            updateWindowTitle();
+            break;
+            
+        case PanelAction::decreasePadding:
+            settings.windowPadding = std::max(
+                settings.minimumWindowPadding,
+                settings.windowPadding - 4.f
+            );
+            updateWindowTitle();
+            break;
+            
+        case PanelAction::increasePadding:
+            settings.windowPadding = std::min(
+                settings.maximumWindowPadding,
+                settings.windowPadding + 4.f
             );
             updateWindowTitle();
             break;
@@ -741,6 +1327,8 @@ void SfmlRenderer::processMouseClick(
         case PanelAction::resetView:
             settings.tileSize = SfmlRenderSettings{}.tileSize;
             settings.tileSpacing = SfmlRenderSettings{}.tileSpacing;
+            settings.windowPadding = SfmlRenderSettings{}.windowPadding;
+            settings.sidePanelWidth = SfmlRenderSettings{}.sidePanelWidth;
             updateWindowTitle();
             break;
             
@@ -751,38 +1339,17 @@ void SfmlRenderer::processMouseClick(
 
 void SfmlRenderer::updateWindowSize(const Maze& maze)
 {
-    const float windowWidth =
-        settings.windowPadding +
-        getMazePixelWidth(maze, settings) +
-        mazePanelGap +
-        settings.sidePanelWidth +
-        settings.windowPadding;
+    const SfmlRenderLayout layout = calculateLayout(maze, settings);
     
-    const float windowHeight =
-        settings.windowPadding +
-        getMazePixelHeight(maze, settings) +
-        settings.windowPadding;
-    
-    sf::Vector2u nextWindowSize{
-        std::max(
-            minimumWindowWidth,
-            static_cast<unsigned int>(windowWidth)
-        ),
-        std::max(
-            minimumWindowHeight,
-            static_cast<unsigned int>(windowHeight)
-        )
-    };
-    
-    if (window.getSize() != nextWindowSize) {
-        window.setSize(nextWindowSize);
+    if (window.getSize() != layout.windowSize) {
+        window.setSize(layout.windowSize);
     }
     
     window.setView(sf::View(sf::FloatRect{
         {0.f, 0.f},
         {
-            static_cast<float>(nextWindowSize.x),
-            static_cast<float>(nextWindowSize.y)
+            static_cast<float>(layout.windowSize.x),
+            static_cast<float>(layout.windowSize.y)
         }
     }));
 }
@@ -790,12 +1357,14 @@ void SfmlRenderer::updateWindowSize(const Maze& maze)
 void SfmlRenderer::updateWindowTitle()
 {
     window.setTitle(
-        "Labyrinth Builder - Labyrinth " +
+        "Labyrinth Builder Base - Labyrinth " +
         std::to_string(labyrinthLevel) +
         ", spacing " +
         std::to_string(static_cast<int>(settings.tileSpacing)) +
         " px, tile " +
         std::to_string(static_cast<int>(settings.tileSize)) +
+        " px, panel " +
+        std::to_string(static_cast<int>(settings.sidePanelWidth)) +
         " px"
     );
 }
@@ -807,26 +1376,88 @@ void SfmlRenderer::render(
 {
     updateWindowSize(maze);
     
-    const float mazeLeft = settings.windowPadding;
-    const float mazeTop = settings.windowPadding;
-    const float mazePixelHeight = getMazePixelHeight(maze, settings);
-    const float panelLeft = getPanelLeft(maze, settings);
+    const SfmlRenderLayout layout = calculateLayout(maze, settings);
+    const SfmlRenderSettings& renderSettings = layout.settings;
+    const float mazeLeft = layout.mazeLeft;
+    const float mazeTop = layout.mazeTop;
+    const float mazePixelHeight = layout.mazePixelHeight;
+    const float panelLeft = layout.panelLeft;
     
     const float outerMarkerInset =
-        settings.tileSize * outerMarkerInsetRatio;
+        renderSettings.tileSize * outerMarkerInsetRatio;
     const float outerMarkerSize =
-        settings.tileSize - outerMarkerInset * 2.f;
+        renderSettings.tileSize - outerMarkerInset * 2.f;
     const float innerMarkerSize = outerMarkerSize * innerMarkerScale;
     const float playerMarkerRadius =
-        settings.tileSize * playerMarkerRadiusRatio;
+        renderSettings.tileSize * playerMarkerRadiusRatio;
+    const float floorHighlightHeight = std::max(
+        1.f,
+        renderSettings.tileSize * floorHighlightRatio
+    );
+    const float floorShadeHeight = std::max(
+        1.f,
+        renderSettings.tileSize * floorHighlightRatio
+    );
+    const float wallHighlightHeight = std::max(
+        1.f,
+        renderSettings.tileSize * wallHighlightRatio
+    );
+    const float wallLowerShadeHeight = std::max(
+        1.f,
+        renderSettings.tileSize * wallLowerShadeRatio
+    );
+    
+    const float frameSeconds = std::min(
+        0.05f,
+        frameClock.restart().asSeconds()
+    );
+    
+    if (!visualPlayerPositionInitialized) {
+        visualPlayerRow = static_cast<float>(player.getRow());
+        visualPlayerColumn = static_cast<float>(player.getColumn());
+        visualPlayerPositionInitialized = true;
+    }
+    
+    const float targetPlayerRow = static_cast<float>(player.getRow());
+    const float targetPlayerColumn = static_cast<float>(player.getColumn());
+    const float playerDistance =
+        std::abs(targetPlayerRow - visualPlayerRow) +
+        std::abs(targetPlayerColumn - visualPlayerColumn);
+    
+    if (playerDistance > 2.f) {
+        visualPlayerRow = targetPlayerRow;
+        visualPlayerColumn = targetPlayerColumn;
+    } else {
+        const float followRatio = 1.f -
+            std::exp(-settings.playerVisualFollowSpeed * frameSeconds);
+        visualPlayerRow += (targetPlayerRow - visualPlayerRow) * followRatio;
+        visualPlayerColumn +=
+            (targetPlayerColumn - visualPlayerColumn) * followRatio;
+    }
     
     sf::RectangleShape floorTile({
-        settings.tileSize,
-        settings.tileSize
+        renderSettings.tileSize,
+        renderSettings.tileSize
     });
     
     floorTile.setFillColor(floorColor);
     floorTile.setOutlineThickness(0.f);
+    
+    sf::RectangleShape floorHighlight({
+        renderSettings.tileSize,
+        floorHighlightHeight
+    });
+    
+    floorHighlight.setFillColor(floorHighlightColor);
+    floorHighlight.setOutlineThickness(0.f);
+    
+    sf::RectangleShape floorShade({
+        renderSettings.tileSize,
+        floorShadeHeight
+    });
+    
+    floorShade.setFillColor(floorShadeColor);
+    floorShade.setOutlineThickness(0.f);
     
     sf::CircleShape outerMarker(outerMarkerSize / 2.f, 4);
     
@@ -839,21 +1470,37 @@ void SfmlRenderer::render(
     innerMarker.setOutlineThickness(0.f);
     
     sf::RectangleShape wallShadowTile({
-        settings.tileSize,
-        settings.tileSize
+        renderSettings.tileSize,
+        renderSettings.tileSize
     });
     
     wallShadowTile.setFillColor(wallShadowColor);
     wallShadowTile.setOutlineThickness(0.f);
     
     sf::RectangleShape wallTile({
-        settings.tileSize,
-        settings.tileSize
+        renderSettings.tileSize,
+        renderSettings.tileSize
     });
     
     wallTile.setFillColor(wallColor);
     wallTile.setOutlineColor(copperOutlineColor);
     wallTile.setOutlineThickness(2.f);
+    
+    sf::RectangleShape wallHighlight({
+        renderSettings.tileSize,
+        wallHighlightHeight
+    });
+    
+    wallHighlight.setFillColor(wallHighlightColor);
+    wallHighlight.setOutlineThickness(0.f);
+    
+    sf::RectangleShape wallLowerShade({
+        renderSettings.tileSize,
+        wallLowerShadeHeight
+    });
+    
+    wallLowerShade.setFillColor(wallLowerShadeColor);
+    wallLowerShade.setOutlineThickness(0.f);
     
     sf::CircleShape playerShadow(playerMarkerRadius);
     
@@ -866,37 +1513,50 @@ void SfmlRenderer::render(
     playerMarker.setOutlineColor(playerOutlineColor);
     playerMarker.setOutlineThickness(2.f);
     
+    sf::CircleShape playerHighlight(std::max(2.f, playerMarkerRadius * 0.22f));
+    
+    playerHighlight.setFillColor(sf::Color(205, 255, 255, 185));
+    playerHighlight.setOutlineThickness(0.f);
+    
     window.clear(backgroundColor);
     
     drawMaze(
         window,
         maze,
         floorTile,
+        floorHighlight,
+        floorShade,
         outerMarker,
         innerMarker,
         wallShadowTile,
         wallTile,
+        wallHighlight,
+        wallLowerShade,
         mazeLeft,
         mazeTop,
-        settings
+        renderSettings
     );
 
     drawPlayer(
         window,
-        player,
+        visualPlayerRow,
+        visualPlayerColumn,
         playerShadow,
         playerMarker,
+        playerHighlight,
         mazeLeft,
         mazeTop,
-        settings
+        renderSettings
     );
     
     drawInterfacePanel(
         window,
         panelLeft,
         mazeTop,
-        mazePixelHeight,
+        std::max(mazePixelHeight, minimumPanelHeight),
+        renderSettings,
         settings,
+        layout.autoFitApplied,
         interfaceFontLoaded ? &interfaceFont : nullptr,
         labyrinthLevel,
         maze

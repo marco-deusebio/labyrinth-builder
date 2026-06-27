@@ -16,7 +16,36 @@ experiments.
   - SFML maze renderer
   - Pixel spacing controls
   - Tile-size controls
-  - Basic interactive side panel
+  - Responsive interactive side panel
+  - Configurable panel width, padding, and display auto-fit behavior
+  - Held-key movement input for responsive SFML demos/games
+  - Layered wall, floor, marker, and player shading
+
+## Renderer base settings
+
+`SfmlRenderSettings` is the reusable surface for games that want to start from
+this renderer and then add their own visual systems. It now includes preferred
+values plus bounds for tile size, tile spacing, window padding, and side-panel
+width. It also includes `autoFitToDisplay` and `displaySafetyMargin` so large
+mazes can stay inside the current interface only when the preferred window would
+otherwise exceed the display.
+
+Keyboard feel is controlled by `movementStepSeconds`, while
+`playerVisualFollowSpeed` controls how sharply the displayed marker catches up
+to the authoritative grid position. This keeps the reusable `Player` model
+simple while letting SFML demos feel immediate and smooth.
+
+The right-side panel is drawn from the same responsive layout used for mouse
+hit-testing. Labels and status text fit themselves to the available panel width,
+which keeps derived projects from needing hard-coded title or option text sizes
+as their window and maze dimensions change.
+
+## Cleanup policy
+
+The project keeps `SfmlRendererSmoke` as the one SFML smoke executable because it
+uses the reusable renderer directly. Older standalone rendering experiments and
+Xcode `xcuserdata` files should stay out of source control so the base project
+does not carry duplicated drawing code or user-local IDE state.
 
 ## Game-specific branches
 

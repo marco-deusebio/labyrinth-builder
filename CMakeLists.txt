@@ -59,21 +59,6 @@ target_link_libraries(
 )
 
 add_executable(
-    SfmlWindowTest
-    "SfmlWindowTest/SfmlWindowTest.cpp"
-)
-
-target_compile_features(
-    SfmlWindowTest
-    PRIVATE cxx_std_20
-)
-
-target_link_libraries(
-    SfmlWindowTest
-    PRIVATE LabyrinthBuilderCore SFML::Graphics
-)
-
-add_executable(
     SfmlRendererSmoke
     "SfmlRendererSmoke/SfmlRendererSmoke.cpp"
 )
