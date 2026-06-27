@@ -1,33 +1,33 @@
-# Labyrinth Forge
+# Labyrinth Builder
 
-[![C++ Standard](https://shields.io)](https://cppreference.com)
-[![License: MIT](https://shields.io)](https://opensource.org)
+This is the standalone maze/labyrinth developer project.
 
-A professional C++ / Objective-C application codebase managed via structural parent workspaces.
+It contains the reusable labyrinth systems without the crypt-solver game layer:
 
-## Getting Started
+- maze generation
+- player movement/state
+- console rendering
+- SFML maze rendering
+- tile size and pixel-spacing controls
+- reusable progression helpers
 
-### Prerequisites
-* macOS with **Xcode Developer Tools** installed or a standard C++ compiler with CMake.
-* A compliant C++ compiler (Clang/GCC).
-* Objective-C / Objective-C++ support when building `.m` or `.mm` source files.
+Use this project when you want to build or experiment with the labyrinth engine
+itself, or when you want a clean base for a different game idea.
 
-### Compilation & Build Execution
+## Build with CMake
 
-#### Via Xcode
-Open the nested Xcode files directly inside Xcode and press `Command-R` to compile and execute the main project application target pipeline.
-
-#### Via CMake
-To build this project using the generated CMake setup:
 ```bash
-mkdir build && cd build
-cmake ..
-cmake --build .
-./labyrinth-forge
+cmake -S . -B build
+cmake --build build
 ```
 
-## Source Architecture Layout
-Source files are organized inside the active working tree parent directory layouts.
+## Build with Xcode
 
-## Codebase Reference Documentation
-Code documentation structure is maintained with Doxygen and, when available, Graphviz relationship maps.
+Open `Labyrinth Forge.xcodeproj` from this folder and build the available app or
+test schemes.
+
+## Split-project note
+
+This folder was split from the `codex/labyrinth-base-project` branch of the
+original `Labyrinth Forge` repo. It is now a standalone project folder with its
+own Git repository and no remote connected to the old combined source repo.
